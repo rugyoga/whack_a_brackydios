@@ -2,14 +2,15 @@ require 'gosu'
 
 require_relative 'sprite'
 
-class WhackARuby < Gosu::Window
+class WhackABrachydios < Gosu::Window
     HEIGHT = 1000
     WIDTH  =  500
 
-	def initialize
+	def initialize(n)
 		super WIDTH,HEIGHT,false
 		self.caption = "Hal's Whack-A-Brach!"
-		@brachydioses = [generate_brachydios, generate_brachydios, generate_brachydios, generate_brachydios, generate_brachydios, generate_brachydios]
+		@brachydioses = []
+		n.times{ |i| @brachydioses.push generate_brachydios }
 	end
 
 	def generate_brachydios
@@ -37,5 +38,5 @@ class WhackARuby < Gosu::Window
 	end
 end
 
-window = WhackARuby.new
+window = WhackABrachydios.new( (ARGV[0] || "10").to_i )
 window.show
