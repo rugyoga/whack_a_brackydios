@@ -12,6 +12,7 @@ class WhackABrachydios < Gosu::Window
 		@brachydioses = []
 		n.times{ |i| @brachydioses.push generate_brachydios }
 		@hammer = Gosu::Image.new(self,'hammer.png',false)
+        @font   = Gosu::Font.new(self,'system',30)
 		@show_hammer = 0
 	end
 
@@ -20,6 +21,10 @@ class WhackABrachydios < Gosu::Window
 	end
 
 	def update
+		@brachydioses.dup.each do |b|
+			@brachydioses.delete b if Gosu.distance(mouse_x, mouse_y, b.x, b.y) < 100
+		end if @show_hammer > 0
+		exit 0 if @brachydioses.empty?
 		@brachydioses.each(&:update)
 		for i in 0..(@brachydioses.size-1)
 			for j in (i+1)..(@brachydioses.size-1)
@@ -46,6 +51,8 @@ class WhackABrachydios < Gosu::Window
 		if @show_hammer > 0
 			@hammer.draw( mouse_x, mouse_y, 1 )
 			@show_hammer -= 1
+		else
+			@font.draw('+', mouse_x, mouse_y, 2)
 		end
 	end
 end
