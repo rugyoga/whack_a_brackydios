@@ -11,6 +11,8 @@ class WhackABrachydios < Gosu::Window
 		self.caption = "Hal's Whack-A-Brach!"
 		@brachydioses = []
 		n.times{ |i| @brachydioses.push generate_brachydios }
+		@hammer = Gosu::Image.new(self,'hammer.png',false)
+		@show_hammer = 0
 	end
 
 	def generate_brachydios
@@ -33,8 +35,18 @@ class WhackABrachydios < Gosu::Window
 		end
 	end
 
+	def button_down(id)
+		if (id == Gosu::MsLeft)
+			@show_hammer = 10
+		end
+	end
+
 	def draw
 		@brachydioses.each(&:draw)
+		if @show_hammer > 0
+			@hammer.draw( mouse_x, mouse_y, 1 )
+			@show_hammer -= 1
+		end
 	end
 end
 
